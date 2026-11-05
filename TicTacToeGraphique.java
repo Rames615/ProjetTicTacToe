@@ -45,7 +45,6 @@ public class TicTacToeGraphique extends JFrame implements ActionListener {
         add(grillePanel, BorderLayout.CENTER);
         add(barreStatut, BorderLayout.SOUTH);
 
-        setVisible(true); // Rend la fenêtre visible à l'écran
     }
 
     // CETTE MÉTHODE S'ÉCUTE À CHAQUE FOIS QU'ON CLIQUE SUR UN BOUTON
@@ -73,6 +72,7 @@ public class TicTacToeGraphique extends JFrame implements ActionListener {
             proposerRecommencer("Le joueur " + joueurActuel + " a gagné !");
         } else if (isBoardFull()) {
             barreStatut.setText("🤝 MATCH NUL ! La grille est pleine. 🤝");
+            verrouillerGrille();
             proposerRecommencer("Match nul !");
         } else {
             // Changement de joueur
@@ -144,6 +144,9 @@ public class TicTacToeGraphique extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         // Lance l'application graphique de manière sécurisée
-        SwingUtilities.invokeLater(() -> new TicTacToeGraphique());
+        SwingUtilities.invokeLater(() -> {
+            TicTacToeGraphique fenetre = new TicTacToeGraphique();
+            fenetre.setVisible(true);
+        });
     }
 }

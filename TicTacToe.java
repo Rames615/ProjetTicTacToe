@@ -5,64 +5,72 @@ public class TicTacToe {
     private static char joueurActuel = 'X';
 
     public static void main(String[] args) {
-        Scanner clavier = new Scanner(System.in);
-        initialiserPlateau();
-        boolean partieEnCours = true;
+        try (Scanner clavier = new Scanner(System.in)) {
+            initialiserPlateau();
 
-        System.out.println("=========================================");
-        System.out.println("       BIENVENUE AU TIC-TAC-TOE !        ");
-        System.out.println("=========================================");
-        System.out.println("Les coordonnées vont de 0 à 2 (Ligne et Colonne).\n");
+            System.out.println("=========================================");
+            System.out.println("       BIENVENUE AU TIC-TAC-TOE !        ");
+            System.out.println("=========================================");
+            System.out.println("Les coordonnées vont de 0 à 2 (Ligne et Colonne).\n");
 
-        while (partieEnCours) {
-            afficherPlateau();
-            System.out.println("Tour du Joueur " + joueurActuel);
-            
-            int ligne, colonne;
-            
             while (true) {
-                System.out.print("Entrez la ligne (0, 1, 2) : ");
-                if (!clavier.hasNextInt()) {
-                    System.out.println("⚠️ Entrée invalide ! Entrez un chiffre.");
-                    clavier.next();
-                    continue;
-                }
-                ligne = clavier.nextInt();
+                afficherPlateau();
+                System.out.println("Tour du Joueur " + joueurActuel);
 
-                System.out.print("Entrez la colonne (0, 1, 2) : ");
-                if (!clavier.hasNextInt()) {
-                    System.out.println("⚠️ Entrée invalide ! Entrez un chiffre.");
-                    clavier.next();
-                    continue;
-                }
-                colonne = clavier.nextInt();
-                
-                if (ligne >= 0 && ligne < 3 && colonne >= 0 && colonne < 3) {
-                    if (plateau[ligne][colonne] == ' ') {
-                        break; 
-                    } else {
-                        System.out.println("⚠️ Case déjà occupée ! Réessayez.");
+                int ligne;
+                int colonne;
+
+                while (true) {
+                    System.out.print("Entrez la ligne (0, 1, 2) : ");
+                    if (!clavier.hasNextInt()) {
+                        if (!clavier.hasNext()) {
+                            System.out.println("\nFin de l'entrée. Partie terminée.");
+                            return;
+                        }
+                        System.out.println("⚠️ Entrée invalide ! Entrez un chiffre.");
+                        clavier.next();
+                        continue;
                     }
-                } else {
-                    System.out.println("⚠️ Coordonnées hors limites ! Réessayez.");
+                    ligne = clavier.nextInt();
+
+                    System.out.print("Entrez la colonne (0, 1, 2) : ");
+                    if (!clavier.hasNextInt()) {
+                        if (!clavier.hasNext()) {
+                            System.out.println("\nFin de l'entrée. Partie terminée.");
+                            return;
+                        }
+                        System.out.println("⚠️ Entrée invalide ! Entrez un chiffre.");
+                        clavier.next();
+                        continue;
+                    }
+                    colonne = clavier.nextInt();
+
+                    if (ligne >= 0 && ligne < 3 && colonne >= 0 && colonne < 3) {
+                        if (plateau[ligne][colonne] == ' ') {
+                            break;
+                        } else {
+                            System.out.println("⚠️ Case déjà occupée ! Réessayez.");
+                        }
+                    } else {
+                        System.out.println("⚠️ Coordonnées hors limites ! Réessayez.");
+                    }
                 }
-            }
 
-            plateau[ligne][colonne] = joueurActuel;
+                plateau[ligne][colonne] = joueurActuel;
 
-            if (checkWin()) {
-                afficherPlateau();
-                System.out.println("🎉 FÉLICITATIONS ! Le joueur " + joueurActuel + " a gagné ! 🎉");
-                partieEnCours = false;
-            } else if (isBoardFull()) {
-                afficherPlateau();
-                System.out.println("🤝 MATCH NUL ! La grille est pleine. 🤝");
-                partieEnCours = false;
-            } else {
-                joueurActuel = (joueurActuel == 'X') ? 'O' : 'X';
+                if (checkWin()) {
+                    afficherPlateau();
+                    System.out.println("🎉 FÉLICITATIONS ! Le joueur " + joueurActuel + " a gagné ! 🎉");
+                    break;
+                } else if (isBoardFull()) {
+                    afficherPlateau();
+                    System.out.println("🤝 MATCH NUL ! La grille est pleine. 🤝");
+                    break;
+                } else {
+                    joueurActuel = (joueurActuel == 'X') ? 'O' : 'X';
+                }
             }
         }
-        clavier.close();
     }
 
     public static void initialiserPlateau() {

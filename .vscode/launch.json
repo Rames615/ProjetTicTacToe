@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "TicTacToe",
+            "request": "launch",
+            "mainClass": "TicTacToe",
+            "projectName": "ProjetTicTacToe_a20dd910"
+        },
+        {
+            "type": "java",
+            "name": "TicTacToeGraphique",
+            "request": "launch",
+            "mainClass": "TicTacToeGraphique",
+            "projectName": "ProjetTicTacToe_a20dd910"
+        }
+    ]
+}
